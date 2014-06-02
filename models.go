@@ -1,13 +1,13 @@
 package betarigs
 
 // algo represents pair id->algo name as returned by GET algorithms
-type algoId struct {
+type AlgoId struct {
 	Id   uint32 `json:"id"`
 	Name string `json:"name"`
 }
 
 // algorithm represents a GET algorithm JSON response
-type algorithm struct {
+type Algorithm struct {
 	Id          string `json:"id"`
 	Name        string `json:"name"`
 	MarketPrice struct {
@@ -25,7 +25,7 @@ type algorithm struct {
 }
 
 // rig represents a rig (Amazing !)
-type rig struct {
+type Rig struct {
 	Id            uint32 `json:"id"`
 	Name          string `json:"name"`
 	Description   string `json:"description"`

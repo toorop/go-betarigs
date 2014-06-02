@@ -30,7 +30,7 @@ func New(apikey ...string) *Betarigs {
 }
 
 // GetAlgorithms return available algorithms
-func (b *Betarigs) GetAlgorithms() (algos []algoId, err error) {
+func (b *Betarigs) GetAlgorithms() (algos []AlgoId, err error) {
 	r, err := b.client.do("GET", "algorithms.json", "")
 	if err != nil {
 		return
@@ -40,7 +40,7 @@ func (b *Betarigs) GetAlgorithms() (algos []algoId, err error) {
 }
 
 // GetAlgorithm returns information about an algorithm
-func (b *Betarigs) GetAlgorithm(algoID uint32) (algo algorithm, err error) {
+func (b *Betarigs) GetAlgorithm(algoID uint32) (algo Algorithm, err error) {
 	ressource := fmt.Sprintf("algorithm/%d.json", algoID)
 	r, err := b.client.do("GET", ressource, "")
 	if err != nil {
@@ -51,7 +51,7 @@ func (b *Betarigs) GetAlgorithm(algoID uint32) (algo algorithm, err error) {
 }
 
 // GetRigs return a list of rigs
-func (b *Betarigs) GetRigs(algoID uint32, status string, page uint32) (rigs []rig, err error) {
+func (b *Betarigs) GetRigs(algoID uint32, status string, page uint32) (rigs []Rig, err error) {
 	status = strings.ToLower(status)
 	if status != "all" && status != "available" {
 		status = "all"
@@ -62,7 +62,7 @@ func (b *Betarigs) GetRigs(algoID uint32, status string, page uint32) (rigs []ri
 		return
 	}
 	type JsonResponse struct {
-		Items []rig `json:"items"`
+		Items []Rig `json:"items"`
 	}
 	var jr JsonResponse
 	if err = json.Unmarshal(r, &jr); err != nil {
@@ -73,7 +73,7 @@ func (b *Betarigs) GetRigs(algoID uint32, status string, page uint32) (rigs []ri
 }
 
 // GetRig return info about a rig
-func (b *Betarigs) GetRig(rigID uint32) (rig rig, err error) {
+func (b *Betarigs) GetRig(rigID uint32) (rig Rig, err error) {
 	r, err := b.client.do("GET", fmt.Sprintf("rig/%d.json", rigID), "")
 	if err != nil {
 		return
