@@ -117,20 +117,23 @@ OPTIONS:
 
 			// Change price ?
 			// if market price == 0 or (me==me)
-			if marketPrice == 0 || marketPrice == rig.Price.PerSpeedUnit.Value {
-				log.Println(fmt.Sprintf("Rig prince not changed. You have the best price"))
-			} else {
+			if marketPrice != 0 && marketPrice != rig.Price.PerSpeedUnit.Value {
 				newPrice := marketPrice + (priceDiff * marketPrice / 100)
 				if newPrice > minPrice && newPrice != rig.Price.PerSpeedUnit.Value {
-					_, err := btr.UpdateRigPricePerSpeedUnit(uint32(rigId), newPrice)
-					if err != nil {
-						log.Println("ERROR: Unable to get update rig Price.", err)
+					success, err := btr.UpdateRigPricePerSpeedUnit(uint32(rigId), newPrice)
+					if err != nil || !success {
+						log.Println("ERROR: Unable to update rig Price.", err)
 					} else {
 						log.Println(fmt.Sprintf("Rig prince changed to: %f %s", newPrice, algo.MarketPrice.Unit))
 					}
-				} /*else {
-					log.Println(fmt.Sprintf("Rig price not changed."))
-				}*/
+				} else if rig.Price.PerSpeedUnit.Value < minPrice {
+					success, err := btr.UpdateRigPricePerSpeedUnit(uint32(rigId), minPrice)
+					if err != nil || !success {
+						log.Println("ERROR: Unable to update rig Price.", err)
+					} else {
+						log.Println(fmt.Sprintf("Rig prince changed to: %f %s", minPrice, algo.MarketPrice.Unit))
+					}
+				}
 			}
 			time.Sleep(30 * time.Second)
 		}
