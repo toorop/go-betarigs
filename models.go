@@ -45,7 +45,7 @@ type Rig struct {
 		PerSpeedUnit struct {
 			Value float64 `json:"value"`
 			Unit  string  `json:"unit"`
-		}
+		} `json:"per_speed_unit"`
 	} `json:"price"`
 	Stats struct {
 		Total struct {
