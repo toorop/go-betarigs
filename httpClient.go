@@ -52,6 +52,7 @@ func (c *client) do(method, ressource, payload string) (response []byte, err err
 		req.Header.Add("Content-Type", "application/json;charset=utf-8")
 	}
 	req.Header.Add("Accept", "application/json")
+	req.Header.Set("User-Agent", "Go Betarigs: https://github.com/Toorop/go-betarigs")
 
 	// Auth ?
 	if len(c.apiKey) > 0 {
