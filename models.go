@@ -47,6 +47,10 @@ type Rig struct {
 			Unit  string  `json:"unit"`
 		} `json:"per_speed_unit"`
 	} `json:"price"`
+	RentalDurations []struct {
+		Value int    `json:"value"`
+		Unit  string `json:"unit"`
+	} `json:"rental_durations"`
 	Stats struct {
 		Total struct {
 			Score             uint32 `json:"score"`

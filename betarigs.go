@@ -85,7 +85,7 @@ func (b *Betarigs) GetRig(rigID uint32) (rig Rig, err error) {
 // UpdateRigPricePerSpeedUnit update a rig BTC/Mh/Day price
 func (b *Betarigs) UpdateRigPricePerSpeedUnit(rigID uint32, price float64) (success bool, err error) {
 	success = false
-	payload := fmt.Sprintf(`{"price":{"per_speed_unit":{"value":%f,"unit":"BTC/Mh/day"}}}`, price)
+	payload := fmt.Sprintf(`{"price":{"per_speed_unit":{"value":%v,"unit":"BTC/Mh/day"}}}`, price)
 	r, err := b.client.do("PUT", fmt.Sprintf("rig/%d", rigID), payload)
 	if err != nil {
 		return
@@ -106,7 +106,7 @@ func (b *Betarigs) UpdateRigPricePerSpeedUnit(rigID uint32, price float64) (succ
 // UpdateRigPricePerTotalByDay update a rig BTC/Day price
 func (b *Betarigs) UpdateRigPricePerTotalByDay(rigID uint32, price float64) (success bool, err error) {
 	success = false
-	payload := fmt.Sprintf(`{"price":{"total":{"value":%f,"unit":"BTC/day"}}}`, price)
+	payload := fmt.Sprintf(`{"price":{"total":{"value":%v,"unit":"BTC/day"}}}`, price)
 	r, err := b.client.do("PUT", fmt.Sprintf("rig/%d", rigID), payload)
 	if err != nil {
 		return
