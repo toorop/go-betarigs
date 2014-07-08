@@ -2,6 +2,7 @@ package betarigs
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"strings"
 )
@@ -122,4 +123,20 @@ func (b *Betarigs) UpdateRigPricePerTotalByDay(rigID uint32, price float64) (suc
 		success = true
 	}
 	return
+}
+
+// RentRig Book a rig on betarigs and rentalResponse
+func (b *Betarigs) RentRig(rigId uint32, duration int, pool *Pool) (response *rentalResponse, err error) {
+	payload := fmt.Sprintf(`{"rig":{"id":%d},"duration":{"value":%d,"unit":"hour"},"pool":{"url":"%s","worker_name":"%s","worker_password":"%s"}}`, rigId, duration, pool.Url, pool.WorkerName, pool.WorkerPassword)
+	r, errC := b.client.do("POST", "rental", payload)
+	if len(r) > 0 {
+		if err = json.Unmarshal(r, &response); err != nil {
+			return
+		}
+	}
+	if errC != nil {
+		return response, errors.New(response.Error.Message + " - " + errC.Error())
+	}
+	err = json.Unmarshal(r, &response)
+	return response, err
 }
