@@ -104,7 +104,7 @@ func (t jTime) String() string { return time.Time(t).String() }
 // Responses
 
 // rentalJsonResponse represent a response to rental call
-type rentalResponse struct {
+type RentalResponse struct {
 	Id        int    `json:"id"`
 	Status    string `json:"status"`
 	CreatedAt jTime  `json:"created_at"`
